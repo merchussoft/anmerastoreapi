@@ -2,7 +2,6 @@ pipeline {
     agent any
 
     environment {
-        NODE_ENV = 'production' // Configura el entorno
         APP_DIR = '/var/jenkins_home/workspace/nodejs-app' // Cambia esta ruta según sea necesario
         REPO_URL = 'https://github.com/merchussoft/anmerastoreapi.git' // Repositorio Git
         BRANCH = 'desarrollo'

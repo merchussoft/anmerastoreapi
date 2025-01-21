@@ -37,10 +37,10 @@ export class DatabaseConfig  extends Config {
    * @returns Resultado de la consulta.
    */
   public async obtieneDatos(data: obtiene_datos, datos?: any[]): Promise<QueryResponse> {
-    const campos = data.lista_campos?.toString() || '*';
-    const adicional = data.str_adicional || '';
-    const campo = data.campo || '1';
-    const valor = data.valor || '1';
+    const campos = data.lista_campos?.toString() ?? '*';
+    const adicional = data.str_adicional ?? '';
+    const campo = data.campo ?? '1';
+    const valor = data.valor ?? '1';
 
     const sql = `SELECT ${campos} FROM ${data.table} WHERE ${campo}=${this.escapeValue(
       valor

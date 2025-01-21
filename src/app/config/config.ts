@@ -2,8 +2,6 @@ import { MysqlRoot } from "../../interfaces/MysqlConfig-interface";
 
 export abstract class Config {
 
-    constructor() {}
-
     mysqlDataConexion(): MysqlRoot {
         return {
             host: process.env.DB_HOST,

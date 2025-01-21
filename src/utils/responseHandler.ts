@@ -47,3 +47,13 @@ export const sendQueryResult = <T>(data: T, message='Query executed successfully
     response
   }
 }
+
+
+export const sendSuccessReturn = <T>(res: Response, message= "Operation successful", statusCode = 200) => {
+  const response: ApiResponse<T> = {
+      success: true,
+      message
+  };
+
+  res.status(statusCode).json(response)
+}

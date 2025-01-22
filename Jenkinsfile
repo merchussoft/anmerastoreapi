@@ -1,53 +1,44 @@
 pipeline {
     agent any
-
-    environment {
-        APP_DIR = '/var/jenkins_home/workspace/nodejs-app' // Cambia esta ruta según sea necesario
-        REPO_URL = 'https://github.com/merchussoft/anmerastoreapi.git' // Repositorio Git
-        BRANCH = 'desarrollo'
+    tools {
+        maven 'Maven'
+    }
+	
+	environment {
+        SCANNER_HOME = tool 'sonarqube'
     }
 
     stages {
-        stage('Checkout Code') {
+        stage('Git Checkout') {
             steps {
-                git branch: "${BRANCH}", url: "${REPO_URL}"
+                git branch: 'main', url: 'https://github.com/merchussoft/anmerastoreapi'
+                echo 'Git Checkout Completed'
             }
         }
 
-        stage('Install Dependencies') {
+        stage('SonarQube Analysis') {
             steps {
-                sh '''
-                echo "Installing dependencies... con yarn "
-                yarn install
-                '''
-            }
-        }
-
-        stage('Build App') {
-            steps {
-                sh '''
-                echo "Building the application..."
-                yarn build
-                '''
-            }
-        }
-
-        stage('Deploy App') {
-            steps {
-                sh '''
-                echo "Starting the application..."
-                yarn start
-                '''
+                withSonarQubeEnv(credentialsId: 'sonarqube', installationName: 'sonarqube') {
+                    sh '''
+					$SCANNER_HOME/bin/sonar-scanner \
+						-Dsonar.projectKey=anmerastoreapi \
+						-Dsonar.projectName=anmerastoreapi \
+                        -Dsonar.projectVersion=1.0 \
+                        -Dsonar.sources=/var/jenkins_home/workspace/anmerastoreapi \
+                        -Dsonar.sourceEncoding=UTF-8
+					'''
+                    echo 'SonarQube Analysis Completed'
+                }
             }
         }
     }
 
     post {
         success {
-            echo "Application deployed successfully!"
+            echo "Pipeline completed successfully! The application has been deployed."
         }
         failure {
-            echo "Deployment failed. Check the logs for details."
+            echo "Pipeline failed! The application has not been deployed."
         }
     }
 }

@@ -1,5 +1,5 @@
 import mysql from 'mysql2/promise';
-import { obtiene_datos, QueryBuilderOptions, QueryResponse } from '../../interfaces/MysqlConfig-interface';
+import { ObtieneDatos, QueryBuilderOptions, QueryResponse } from '../../interfaces/MysqlConfig-interface';
 import { sendQueryResult } from '../../utils/responseHandler';
 import { Config } from './config';
 
@@ -36,7 +36,7 @@ export class DatabaseConfig  extends Config {
    * @param data Parámetros para la consulta.
    * @returns Resultado de la consulta.
    */
-  public async obtieneDatos(data: obtiene_datos, datos?: any[]): Promise<QueryResponse> {
+  public async obtieneDatos(data: ObtieneDatos, datos?: any[]): Promise<QueryResponse> {
     const campos = data.lista_campos?.toString() ?? '*';
     const adicional = data.str_adicional ?? '';
     const campo = data.campo ?? '1';

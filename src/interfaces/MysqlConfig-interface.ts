@@ -1,5 +1,5 @@
-export interface obtiene_datos {
-    lista_campos?: {} | undefined,
+export interface ObtieneDatos {
+    lista_campos?: {},
     str_adicional?: string,
     campo?: number | string,
     valor?: number | string,

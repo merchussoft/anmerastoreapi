@@ -1,7 +1,7 @@
 import { Route } from "../../decorators/route";
 import { Request, Response } from 'express';
 import { DatabaseConfig } from "../config/db";
-import { dataRegisterUser } from "../../interfaces/dataRegisterUser-interface";
+import { DataRegisterUser } from "../../interfaces/dataRegisterUser-interface";
 import bcrypt from 'bcrypt';
 //import { sendSuccessReturn } from "../../utils/responseHandler";
 
@@ -15,14 +15,6 @@ export class HomeController {
 
     @Route('get', '/')
     async getHome(req: Request, res: Response){
-        /**let result_query: QueryBuilderOptions = {
-            from: ['images i'],
-            joins: [
-                'JOIN image_metadata im ON im.cod_image_metadata = i.cod_image_metadata'
-            ]
-        }
-
-        const resultado_query = await this.db.buildComplexQuery(result_query) */
 
         const resultado_query = await this.db.obtieneDatos({table: process.env.DB_NAME_BASEADMIN + ".empleados"});
 
@@ -38,7 +30,7 @@ export class HomeController {
     @Route('post', '/register-user')
     async registerUser(req: Request, res: Response) {
 
-        const data: dataRegisterUser = req.body
+        const data: DataRegisterUser = req.body
         data.password = await bcrypt.hash(data.password, 10);
 
         const resultado_query = await this.db.obtieneDatos({table: process.env.DB_NAME_BASEADMIN + ".empleados", str_adicional: "AND usuario=? OR email=?"}, [data.usuario, data.email]);

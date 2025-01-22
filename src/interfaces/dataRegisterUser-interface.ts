@@ -1,4 +1,4 @@
-export interface dataRegisterUser {
+export interface DataRegisterUser {
     nombre: string,
     usuario: string,
     email: string,

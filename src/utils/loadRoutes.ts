@@ -1,7 +1,7 @@
 import { Application, Request, Response, Router } from 'express';
 import 'reflect-metadata';
 import { RouteGroups } from '../interfaces/routeGroups-interface';
-import { ROUTEMETA } from '../interfaces/routeMeta-interface';
+import { RouteMeta } from '../interfaces/routeMeta-interface';
 
 export function loadRoutes(app: Application, routeGroups: RouteGroups[]) {
 
@@ -13,7 +13,7 @@ export function loadRoutes(app: Application, routeGroups: RouteGroups[]) {
         
             Object.getOwnPropertyNames(prototype).forEach((methodName) => {
               if (methodName !== 'constructor') {
-                const routeMeta: ROUTEMETA | undefined = Reflect.getMetadata('route', prototype, methodName);
+                const routeMeta: RouteMeta | undefined = Reflect.getMetadata('route', prototype, methodName);
                 if (routeMeta) {
                   const { method, path } = routeMeta;
                   if(['get', 'post', 'put', 'delete'].includes(method)) {

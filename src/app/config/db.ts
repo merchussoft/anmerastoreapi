@@ -42,9 +42,7 @@ export class DatabaseConfig  extends Config {
     const campo = data.campo ?? '1';
     const valor = data.valor ?? '1';
 
-    const sql = `SELECT ${campos} FROM ${data.table} WHERE ${campo}=${this.escapeValue(
-      valor
-    )} ${adicional}`;
+    const sql = `SELECT ${campos} FROM ${data.table} WHERE ${campo}=${this.escapeValue(valor)} ${adicional}`;
     return this.resultPromise(sql, datos);
   }
 

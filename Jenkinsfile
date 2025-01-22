@@ -9,6 +9,14 @@ pipeline {
     }
 
     stages {
+
+        stage('check Docker info'){
+            steps {
+                sh 'docker info'
+            }
+        }
+
+
         stage('Git Checkout') {
             steps {
                 git branch: 'main', url: 'https://github.com/merchussoft/anmerastoreapi'
@@ -39,6 +47,9 @@ pipeline {
         }
         failure {
             echo "Pipeline failed! The application has not been deployed."
+        }
+        always{
+            clearWs()
         }
     }
 }

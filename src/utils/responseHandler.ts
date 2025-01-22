@@ -11,6 +11,7 @@ import { ApiResponse } from "../interfaces/ApiResponse-interface";
  */
 export const sendSuccess = <T>(res: Response, data: T, message= "Operation successful", statusCode = 200) => {
     const response: ApiResponse<T> = {
+        statusCode,
         success: true,
         data,
         message
@@ -51,6 +52,7 @@ export const sendQueryResult = <T>(data: T, message='Query executed successfully
 
 export const sendSuccessReturn = <T>(res: Response, message= "Operation successful", statusCode = 200) => {
   const response: ApiResponse<T> = {
+      statusCode,
       success: true,
       message
   };

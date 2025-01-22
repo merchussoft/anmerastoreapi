@@ -12,7 +12,7 @@ pipeline {
 
         stage('check Docker info'){
             steps {
-                sh 'docker info'
+                sh 'docker compose --version'
             }
         }
 
@@ -49,7 +49,7 @@ pipeline {
             echo "Pipeline failed! The application has not been deployed."
         }
         always{
-            clearWs()
+            sh 'rm -rf *' // Elimina todo en el directorio actual
         }
     }
 }

@@ -19,7 +19,7 @@ pipeline {
 
         stage('Git Checkout') {
             steps {
-                git branch: 'main', url: 'https://github.com/merchussoft/anmerastoreapi.git'
+                git branch: 'desarrollo', url: 'https://github.com/merchussoft/anmerastoreapi'
                 echo 'Git Checkout Completed'
             }
         }

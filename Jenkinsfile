@@ -39,7 +39,27 @@ pipeline {
                 }
             }
         }
+
+        stage('Check Quality Gate') {
+            steps {
+                script {
+                    // Consultamos el estado de la Quality Gate de Sonarqube
+                    def sonarStatus = sh(
+                        script: '''curl -s "http:192.168.1.50:9000/api/qualitygates/project_status?projectKey=anmerastoreapi" | jq -r .projectStatus.status''',
+                        returnStdout: true
+                    ).trim()
+
+                    // verificamos si el estado de la Quality Gate es OK o ERROR
+                    if(sonarStatus!= 'OK') {
+                        error "SonarQube Quality Gate failed. Status: ${sonarStatus}"
+                    } else {
+                        echo "SonarQube Quality Gate passed!"
+                    }
+                }
+            }
+        }
     }
+
 
     post {
         success {

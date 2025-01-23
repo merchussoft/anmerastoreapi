@@ -36,7 +36,7 @@ export class DatabaseConfig  extends Config {
    * @param data Parámetros para la consulta.
    * @returns Resultado de la consulta.
    */
-  public async obtieneDatos(data: ObtieneDatos, datos?: any[]): Promise<QueryResponse> {
+  public async obtieneDatos(data: ObtieneDatos, datos: any[] = []): Promise<QueryResponse> {
     const campos = data.lista_campos?.toString() ?? '*';
     const adicional = data.str_adicional ?? '';
     const campo = data.campo ?? '1';
@@ -97,6 +97,9 @@ public async buildComplexQuery(options: QueryBuilderOptions, datos: [] = []): Pr
    * @returns Valor escapado.
    */
   private escapeValue(value: any): string {
+
+    if(value === '?') return value;
+
     if (typeof value === 'string') return `'${value.replace(/'/g, "\\'")}'`;
     return value.toString();
   }

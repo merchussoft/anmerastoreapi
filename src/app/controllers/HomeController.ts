@@ -1,16 +1,14 @@
-import { Route } from "../../decorators/route";
+import { Route, Controller } from "../../utils/loadRoutes";
 import { Request, Response } from 'express';
-import { DatabaseConfig } from "../config/db";
-import { DataRegisterUser } from "../../interfaces/dataRegisterUser-interface";
 import bcrypt from 'bcrypt';
-import { sendSuccessReturn } from "../../utils/responseHandler";
+import { DatabaseConfig } from "../config/db";
+import { validateLogin } from "../middleware/validateLogin";
+import { sendError, sendSuccess } from "../../utils/responseHandler";
+import { jwtEncoded } from "../middleware/auth-middleware";
 
-/**
-* @swagger
-* tags:
-*  name: Home
-*  description: logica principal
-*/
+
+
+@Controller('/login')
 export class HomeController {
 
     protected db: DatabaseConfig;
@@ -20,45 +18,37 @@ export class HomeController {
     }
 
 
-    /**
-     * @swagger
-     * /:
-     *  get:
-     *      sumary: obtener todos lo empleados
-     *      description: Endpoint para obtener todos lo empleado
-     */
-    @Route('get', '/')
+    // ruta para el login
+    @Route('post', '/', {middleware: [validateLogin]})
     async getHome(req: Request, res: Response){
-        const resultado_query = await this.db.obtieneDatos({table: process.env.DB_NAME_BASEADMIN + ".empleados"});
-        res.status(resultado_query.statusCode).json(resultado_query);
-    }
 
+        const { usuario, password } = req.body;
+        
+        try {
+            // Buscar el usuario en la base de datos por username
+            const { response: {data}} = await this.db.obtieneDatos({
+                lista_campos: ['count(cod_empleado) as count, password, cod_empleado'],
+                table: process.env.DB_NAME_BASEADMIN + ".empleados",
+                campo: "usuario",
+                valor: usuario
+            });
+            
+            const data_result = data[0];
+            if(!data_result.count) return sendError(res, 'warning', 'El usuario es incorrecto', 401);
 
+            // Comparar la contraseña proporcionada con la encriptada en la base de datos
+            const password_match = await bcrypt.compare(password, data_result.password);
+            if(!password_match) return sendError(res, 'warning', 'La password es incorrecta', 401);
 
-    @Route('post', '/submit')
-    submitData(req: Request, res: Response) {
-        res.json({ message: 'Data submitted successfully!' });
-    }
-
-
-
-    @Route('post', '/register-user')
-    async registerUser(req: Request, res: Response) {
-
-        const data_json: DataRegisterUser = req.body
-        data_json.password = await bcrypt.hash(data_json.password, 10);
-
-        const {response: data}  = await this.db.obtieneDatos({
-            table: process.env.DB_NAME_BASEADMIN + ".empleados",
-            str_adicional: "AND (usuario=? OR email=?)"}, [data_json.usuario, data_json.email]
-        );
-
-        if(data.data.length === 0) {
-            const { statusCode, response: {success}} = await this.db.insertTable(process.env.DB_NAME_BASEADMIN + ".empleados", data_json);
-            if(success) return sendSuccessReturn(res, 'Usuario registrado exitosamente', statusCode);
-            return sendSuccessReturn(res, 'Error al registrar al usuario', statusCode)
+            // Generar un JWT si las credenciales son correctas
+            const token = jwtEncoded({ userId: data_result.cod_empleado });
+            return sendSuccess(res, {token: `Bearer ${token}`}, 'Login exitoso')
+            
+        } catch (error) {
+            return sendError(res, 'error', 'error en el servidor', 500);
         }
-
-        return sendSuccessReturn(res, 'el usuario o email ya existe por favor intentar con uno nuevo', 403)
+        
     }
+
+
 }

@@ -1,11 +1,10 @@
 import { Request, Response, NextFunction } from 'express';
 import * as jwt from 'jsonwebtoken';
 import { sendError } from '../../utils/responseHandler';
-//import { JwtEncodedData } from '../../interfaces/dataJwtEncoded-interface';
 const jwtSecret = process.env.JWT_SECRET || 'secret_key'
 
 export const authJswValidate = (req: Request, res: Response, next: NextFunction) => {
-    const token = req.headers['authorization']?.split(' ')[1]
+    const token = req.header('Authorization')?.replace('Bearer ', '');
     
     if(!token) return sendError(res, [], "Token no proporcionado", 401);
 

@@ -2,17 +2,12 @@ import 'dotenv/config';
 import { app } from './src/server';
 import { loadRoutes } from './src/utils/loadRoutes';
 import { HomeController } from './src/app/controllers/HomeController';
+import { UserController } from './src/app/controllers/UserController';
 import { setupSwagger } from './src/app/services/swagger';
 
 
-const route_group = [
-    {
-        prefix: '/api',
-        controllers: [HomeController]
-    }
-]
 
-loadRoutes(app, route_group);
+loadRoutes(app, [HomeController, UserController]);
 
 setupSwagger(app);
 

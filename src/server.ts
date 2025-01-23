@@ -3,7 +3,7 @@ import cors from 'cors';
 import { loggerMiddleware } from './app/middleware/loggerMiddleware';
 
 
-let app = express();
+const app = express();
 app.set('port', process.env.PORT || 3000);
 
 

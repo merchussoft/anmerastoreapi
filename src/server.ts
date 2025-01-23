@@ -7,10 +7,16 @@ const app = express();
 app.set('port', process.env.PORT || 3000);
 
 
+let corsOptions = {
+    origin: '*' // Sensitive
+  };
+
 // Middleware para parsear JSON
-app.use(cors());
+app.use(cors(corsOptions));
 app.use(express.urlencoded({extended: true}));
 app.use(express.json());
 app.use(loggerMiddleware);
+
+app.disable("x-powered-by");
 
 export {app}

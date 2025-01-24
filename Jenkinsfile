@@ -9,7 +9,7 @@ pipeline {
         DB_PASSWORD = credentials('DB_PASSWORD_ANMERASTORE')
         DB_NAME = credentials('DB_NAME_ANMERASTORE')
         DB_PORT = credentials('DB_PORT_ANMERASTORE')
-        DB_NAME_BASEADMIN = credentials('DB_NAME_BASEADMIN')
+        DB_NAME_BASEADMIN = credentials('DB_NAME_BASEADMIN_ANMERASTORE')
     }
 
     stages {

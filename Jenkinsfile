@@ -6,6 +6,13 @@ pipeline {
 	
 	environment {
         SCANNER_HOME = tool 'sonarqube'
+        PORT = credentials('PORT_ANMERASTORE')
+        DB_HOST = credentials('DB_HOST_ANMERASTORE')
+        DB_USER = credentials('DB_USER_ANMERASTORE')
+        DB_PASSWORD = credentials('DB_PASSWORD_ANMERASTORE')
+        DB_NAME = credentials('DB_NAME_ANMERASTORE')
+        DB_PORT = credentials('DB_PORT_ANMERASTORE')
+        DB_NAME_BASEADMIN = credentials('DB_NAME_BASEADMIN')
     }
 
     stages {
@@ -44,15 +51,6 @@ pipeline {
         stage('deploy with Docker Compose') {
             steps {
                 script {
-                    withCredentials([
-                        string(credentialsId: 'PORT_ANMERASTORE', 'variable': 'PORT'),
-                        string(credentialsId: 'DB_HOST_ANMERASTORE', 'variable': 'DB_HOST'),
-                        string(credentialsId: 'DB_USER_ANMERASTORE', 'variable': 'DB_USER'),
-                        string(credentialsId: 'DB_PASSWORD_ANMERASTORE', 'variable': 'DB_PASSWORD'),
-                        string(credentialsId: 'DB_NAME_ANMERASTORE', 'variable': 'DB_NAME'),
-                        string(credentialsId: 'DB_PORT_ANMERASTORE', 'variable': 'DB_PORT'),
-                        string(credentialsId: 'DB_NAME_BASEADMIN_ANMERASTORE', 'variable': 'DB_NAME_BASEADMIN'),
-                    ]) {
                         sh '''
                             echo "INiciando despliegue con docker Compose"
                             PORT=$PORT \
@@ -65,8 +63,6 @@ pipeline {
                             docker compose down -v \
                             docker compose up --build -d
                         '''
-                        
-                    }
                 }
             }
         }

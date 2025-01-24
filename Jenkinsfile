@@ -12,6 +12,7 @@ pipeline {
         DB_NAME = credentials('DB_NAME_ANMERASTORE')
         DB_PORT = credentials('DB_PORT_ANMERASTORE')
         DB_NAME_BASEADMIN = credentials('DB_NAME_BASEADMIN_ANMERASTORE')
+        PORT = credentials('PORT_ANMERASTORE')
     }
 
     stages {
@@ -51,7 +52,7 @@ pipeline {
             steps {
 
                     sh '''
-                        echo "tumbando los contenedores anteriores $DB_HOST"
+                        echo "tumbando los contenedores anteriores  ====aqyu===zzz $DB_HOST zzz====aqui====="
                         docker compose down -v
                     '''
 

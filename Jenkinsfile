@@ -61,22 +61,12 @@ pipeline {
                             DB_PASSWORD=$DB_PASSWORD \
                             DB_NAME=$DB_NAME \
                             DB_PORT=$DB_PORT \
-                            DB_NAME_BASEADMIN=$DB_NAME_BASEADMIN 
+                            DB_NAME_BASEADMIN=$DB_NAME_BASEADMIN \
+                            docker compose down -v \
+                            docker compose up --build -d
                         '''
-                        sh 'docker compose down -v'
                         
                     }
-                }
-            }
-        }
-
-        stage("desplegando la aplicaion con docker") {
-            steps {
-                script {
-                    sh '''
-                        echo "desplegando la aplicaion con docker"
-                        docker compose up --build -d
-                    '''
                 }
             }
         }

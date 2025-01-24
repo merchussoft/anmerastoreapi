@@ -6,6 +6,8 @@ import { UserController } from './src/app/controllers/UserController';
 import { setupSwagger } from './src/app/services/swagger';
 
 
+console.log(`mirando que sale aqui ${process.env.PORT}`);
+
 
 loadRoutes(app, [HomeController, UserController]);
 

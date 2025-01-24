@@ -68,7 +68,9 @@ pipeline {
                     }
                 }
             }
+        }
 
+        stage("desplegando la aplicaion con docker") {
             steps {
                 script {
                     sh '''

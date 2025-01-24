@@ -13,7 +13,7 @@ pipeline {
         stage('check Docker info'){
             steps {
                 sh 'docker compose --version'
-                sh 'docker compose down -v'
+                
             }
         }
 
@@ -61,10 +61,10 @@ pipeline {
                             DB_PASSWORD=$DB_PASSWORD \
                             DB_NAME=$DB_NAME \
                             DB_PORT=$DB_PORT \
-                            DB_NAME_BASEADMIN=$DB_NAME_BASEADMIN \
-                            docker compose build \
-                            docker compose up -d
+                            DB_NAME_BASEADMIN=$DB_NAME_BASEADMIN 
                         '''
+                        sh 'docker compose down -v'
+                        sh 'docker compose up --build -d'
                     }
                 }
             }

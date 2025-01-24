@@ -52,7 +52,7 @@ pipeline {
             steps {
 
                     sh '''
-                        echo "tumbando los contenedores anteriores  ====aqyu===zzz ${DB_HOST} zzz====aqui====="
+                        echo "tumbando los contenedores y sus volumes anteriores"
                         docker compose down -v
                     '''
 

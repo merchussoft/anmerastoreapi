@@ -13,4 +13,4 @@ services:
       - DB_PORT=${DB_PORT}
       - DB_NAME_BASEADMIN=${DB_NAME_BASEADMIN}
       - NODE_ENV=develonment
-    restart: unless-stopped
+    restart: always

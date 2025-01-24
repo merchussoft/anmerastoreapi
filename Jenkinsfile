@@ -77,8 +77,5 @@ pipeline {
         failure {
             echo "Pipeline failed! The application has not been deployed."
         }
-        always{
-            sh 'rm -rf *' // Elimina todo en el directorio actual
-        }
     }
 }

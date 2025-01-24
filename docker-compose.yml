@@ -1,0 +1,17 @@
+services:
+  api_anmerastore:
+    build: .
+    container_name: anmerastore_api
+    ports:
+      - 3000:3000
+    environment:
+      - PORT=${PORT}
+      - DB_HOST=${DB_HOST}
+      - DB_USER=${DB_USER}
+      - DB_PASSWORD=${DB_PASSWORD}
+      - DB_NAME=${DB_NAME}
+      - DB_PORT=${DB_PORT}
+      - DB_NAME_BASEADMIN=${DB_NAME_BASEADMIN}
+    volumes:
+      - .:/app
+    restart: unless-stopped

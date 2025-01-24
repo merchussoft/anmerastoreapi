@@ -15,7 +15,7 @@ export function loadRoutes(app: Application, controllers: Function[]) {
 
     const prefix: string = Reflect.getMetadata('prefix', ControllerClass) || '';
     // Prcesar todas las rutas definidas en el controlador 
-    processControllerRoutes(instance, prototype, router)
+    processControllerRoutes(instance, prototype, router);
     app.use(prefix, router);
   });
 
@@ -36,7 +36,7 @@ export function Route(method: string, path: string, options: RouteOptions = {}):
 
 // hacemos la validacion de los metodos http
 function ivValidHttpMethod(method: string): boolean {
-  return ['get', 'post', 'put', 'delete'].includes(method);
+  return ['get', 'post', 'put', 'delete', 'patch', 'options', 'head'].includes(method);
 }
 
 
@@ -50,7 +50,7 @@ function registerRoute(router: Router, method: string, path: string, handlers: A
     return;
   }
 
-  router[method as 'get' | 'post' | 'put' | 'delete'](path, ...handlers)
+  router[method as 'get' | 'post' | 'put' | 'delete' | 'patch' | 'options' | 'head'](path, ...handlers);
  
 }
 
@@ -70,10 +70,10 @@ function processControllerRoutes(instance: any, prototype: any, router: Router):
       ...(authRequired  ? [authJswValidate]: []),
       ...middleware,
       handler
-    ]
+    ];
     
-    registerRoute(router, method, path, router_handlers)
-  })
+    registerRoute(router, method, path, router_handlers);
+  });
 
 
 }

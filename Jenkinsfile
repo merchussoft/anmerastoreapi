@@ -40,20 +40,29 @@ pipeline {
             }
         }
 
-        stage('Check Quality Gate') {
+        stage('deploy with Docker Compose') {
             steps {
                 script {
-                    // Consultamos el estado de la Quality Gate de Sonarqube
-                    def sonarStatus = sh(
-                        script: '''curl -s "http:192.168.1.50:9000/api/qualitygates/project_status?projectKey=anmerastoreapi" | jq -r .projectStatus.status''',
-                        returnStdout: true
-                    ).trim()
-
-                    // verificamos si el estado de la Quality Gate es OK o ERROR
-                    if(sonarStatus!= 'OK') {
-                        error "SonarQube Quality Gate failed. Status: ${sonarStatus}"
-                    } else {
-                        echo "SonarQube Quality Gate passed!"
+                    withCredentials([
+                        string(credentialsId: 'PORT_ANMERASTORE', 'variable': 'PORT'),
+                        string(credentialsId: 'DB_HOST_ANMERASTORE', 'variable': 'DB_HOST'),
+                        string(credentialsId: 'DB_USER_ANMERASTORE', 'variable': 'DB_USER'),
+                        string(credentialsId: 'DB_PASSWORD_ANMERASTORE', 'variable': 'DB_PASSWORD'),
+                        string(credentialsId: 'DB_NAME_ANMERASTORE', 'variable': 'DB_NAME'),
+                        string(credentialsId: 'DB_PORT_ANMERASTORE', 'variable': 'DB_PORT'),
+                        string(credentialsId: 'DB_NAME_BASEADMIN_ANMERASTORE', 'variable': 'DB_NAME_BASEADMIN'),
+                    ]) {
+                        sh '''
+                            echo "INiciando despliegue con docker Compose"
+                            PORT=$PORT \
+                            DB_HOST=$DB_HOST \
+                            DB_USER=$DB_USER \
+                            DB_PASSWORD=$DB_PASSWORD \
+                            DB_NAME=$DB_NAME \
+                            DB_PORT=$DB_PORT \
+                            DB_NAME_BASEADMIN=$DB_NAME_BASEADMIN \
+                            docker compose up -d
+                        '''
                     }
                 }
             }

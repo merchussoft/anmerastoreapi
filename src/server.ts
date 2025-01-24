@@ -8,7 +8,7 @@ app.set('port', process.env.PORT || 3000);
 
 
 let corsOptions = {
-    origin: 'https://192.168.1.25:5417' // Sensitive
+    origin: '*' // Sensitive
   };
 
 // Middleware para parsear JSON

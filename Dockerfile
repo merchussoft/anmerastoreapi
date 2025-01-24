@@ -3,19 +3,16 @@ FROM node:18-alpine
 
 WORKDIR /app
 
-# Antes de instalar dependencias
-RUN ls -l /app
 
 COPY package.json ./
-
-# Antes de instalar dependencias
-RUN ls -l /app
 
 RUN yarn install --frozen-lockfile
 
 COPY . .
 
-# Antes de instalar dependencias
-RUN ls -l /app
+
+# Expone el puerto que la aplicación usa
+EXPOSE 3000
+EXPOSE 3055
 
 CMD ["yarn", "dev"]

@@ -36,7 +36,7 @@ pipeline {
             steps {
                 withSonarQubeEnv(credentialsId: 'sonarqube', installationName: 'sonarqube') {
                     sh '''
-					$SCANNER_HOME/bin/sonar-scanner \
+					${SCANNER_HOME}/bin/sonar-scanner \
 						-Dsonar.projectKey=anmerastoreapi \
 						-Dsonar.projectName=anmerastoreapi \
                         -Dsonar.projectVersion=1.0 \
@@ -52,7 +52,7 @@ pipeline {
             steps {
 
                     sh '''
-                        echo "tumbando los contenedores anteriores  ====aqyu===zzz $DB_HOST zzz====aqui====="
+                        echo "tumbando los contenedores anteriores  ====aqyu===zzz ${DB_HOST} zzz====aqui====="
                         docker compose down -v
                     '''
 

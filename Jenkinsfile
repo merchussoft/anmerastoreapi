@@ -64,8 +64,17 @@ pipeline {
                             DB_NAME_BASEADMIN=$DB_NAME_BASEADMIN 
                         '''
                         sh 'docker compose down -v'
-                        sh 'docker compose up --build -d'
+                        
                     }
+                }
+            }
+
+            steps {
+                script {
+                    sh '''
+                        echo "desplegando la aplicaion con docker"
+                        docker compose up --build -d
+                    '''
                 }
             }
         }

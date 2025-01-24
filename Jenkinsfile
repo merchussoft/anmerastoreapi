@@ -1,9 +1,11 @@
 pipeline {
     agent any
+    tools {
+        maven 'Maven'
+    }
 	
 	environment {
         SCANNER_HOME = tool 'sonarqube'
-        PORT = credentials('PORT_ANMERASTORE')
         DB_HOST = credentials('DB_HOST_ANMERASTORE')
         DB_USER = credentials('DB_USER_ANMERASTORE')
         DB_PASSWORD = credentials('DB_PASSWORD_ANMERASTORE')
@@ -48,11 +50,19 @@ pipeline {
         stage('deploy with Docker Compose') {
             steps {
                 script {
-                        sh '''
-                            echo "INiciando despliegue con docker Compose"
-                            docker compose down -v \
-                            docker compose up --build -d
-                        '''
+                    sh '''
+                        echo "tumbando los contenedores anteriores"
+                        sh 'docker compose down -v
+                    '''
+                }
+            }
+
+            steps {
+                script {
+                    sh '''
+                        echo "desplegando la aplicaion con docker"
+                        sh 'docker compose up --build -d
+                    '''
                 }
             }
         }

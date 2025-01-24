@@ -49,12 +49,12 @@ pipeline {
 
         stage('stop and down and eraser volumes Docker Compose') {
             steps {
-                script {
+
                     sh '''
                         echo "tumbando los contenedores anteriores"
-                        sh 'docker compose down -v
+                        sh 'docker compose down -v'
                     '''
-                }
+
             }
         }
 
@@ -63,7 +63,7 @@ pipeline {
                 script {
                     sh '''
                         echo "desplegando la aplicaion con docker"
-                        sh 'docker compose up --build -d
+                        sh 'docker compose up --build -d'
                     '''
                 }
             }

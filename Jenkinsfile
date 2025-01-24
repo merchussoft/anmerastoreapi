@@ -52,7 +52,7 @@ pipeline {
 
                     sh '''
                         echo "tumbando los contenedores anteriores"
-                        sh 'docker compose down -v'
+                        docker compose down -v
                     '''
 
             }
@@ -63,7 +63,7 @@ pipeline {
                 script {
                     sh '''
                         echo "desplegando la aplicaion con docker"
-                        sh 'docker compose up --build -d'
+                        docker compose up --build -d
                     '''
                 }
             }

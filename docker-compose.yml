@@ -12,6 +12,7 @@ services:
       - DB_NAME=${DB_NAME}
       - DB_PORT=${DB_PORT}
       - DB_NAME_BASEADMIN=${DB_NAME_BASEADMIN}
+      - NODE_ENV=develonment
     volumes:
       - .:/app
     restart: unless-stopped

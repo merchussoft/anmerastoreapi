@@ -1,12 +1,13 @@
-FROM node:20
+FROM node:18-alpine
 
+RUN npm install -g typescript
 
 WORKDIR /app
 
 COPY package.json ./
 
-RUN yarn install
+RUN yarn install --frozen-lockfile
 
 COPY . .
 
-CMD ["yarn", "dev"]
+CMD ["yarn", "start"]

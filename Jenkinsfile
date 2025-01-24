@@ -47,7 +47,7 @@ pipeline {
             }
         }
 
-        stage('deploy with Docker Compose') {
+        stage('stop and down and eraser volumes Docker Compose') {
             steps {
                 script {
                     sh '''
@@ -56,7 +56,9 @@ pipeline {
                     '''
                 }
             }
+        }
 
+        stage('deploy with Docker Compose') {
             steps {
                 script {
                     sh '''

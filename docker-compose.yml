@@ -3,7 +3,7 @@ services:
     build: .
     container_name: anmerastore_api
     ports:
-      - 3000:3000
+      - ${PORT}:${PORT}
     environment:
       - PORT=${PORT}
       - DB_HOST=${DB_HOST}

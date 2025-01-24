@@ -4,10 +4,11 @@ RUN npm install -g typescript
 
 WORKDIR /app
 
-COPY package.json ./
+#COPY package.json ./
 
-RUN yarn install --frozen-lockfile
 
 COPY . .
 
-CMD ["yarn", "start"]
+RUN yarn install --frozen-lockfile
+
+CMD ["yarn", "dev"]

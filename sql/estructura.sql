@@ -12,22 +12,60 @@ FLUSH PRIVILEGES;
 -- Categorías de productos
 CREATE TABLE IF NOT EXISTS categorias(
     cod_categoria INT AUTO_INCREMENT PRIMARY KEY,
-    nombre VARCHAR(100) NOT NULL,
+    nombre VARCHAR(100) NOT NULL UNIQUE,
     descripcion TEXT,
     fecha_creacion TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
 )ENGINE=InnoDB DEFAULT CHARSET=UTF8MB4;
 
 
+ALTER TABLE categorias ADD UNIQUE (nombre);
+
+
+
 -- Productos
 CREATE TABLE IF NOT EXISTS productos(
     cod_producto INT AUTO_INCREMENT PRIMARY KEY,
-    nombre VARCHAR(150) NOT NULL,
+    nombre VARCHAR(150) NOT NULL UNIIQUE,
     descripcion TEXT,
     precio DECIMAL(10, 2) NOT NULL,
     stock INT DEFAULT 0,
-    cod_categoria INT NOT NULL,
+    fecha_creacion TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+)ENGINE=InnoDB DEFAULT CHARSET=UTF8MB4;
+
+
+CREATE TABLE IF NOT EXISTS subcategorias_names(
+    cod_subcategoria_name INT AUTO_INCREMENT PRIMARY KEY,
+    nombre VARCHAR(100) NOT NULL UNIIQUE,
+    activo TINYINT DEFAULT 0,
     fecha_creacion TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    cod_categoria INT, 
     FOREIGN KEY (cod_categoria) REFERENCES categorias(cod_categoria) ON DELETE CASCADE
+)ENGINE=InnoDB DEFAULT CHARSET=UTF8MB4;
+
+CREATE TABLE IF NOT EXISTS subcategorias(
+    cod_subcategoria INT AUTO_INCREMENT PRIMARY KEY,
+    nombre VARCHAR(100) NOT NULL UNIQUE,
+    activo TINYINT DEFAULT 0,
+    fecha_creacion TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    cod_categoria INT, 
+    cod_subcategoria_name INT,
+    FOREIGN KEY (cod_categoria) REFERENCES categorias(cod_categoria) ON DELETE CASCADE,
+    FOREIGN KEY (cod_subcategoria_name) REFERENCES subcategorias_names(cod_subcategoria_name) ON DELETE CASCADE
+)ENGINE=InnoDB DEFAULT CHARSET=UTF8MB4;
+
+
+
+CREATE TABLE IF NOT EXISTS relacion_productos(
+    cod_relacion_producto INT AUTO_INCREMENT PRIMARY KEY,
+    cod_producto INT,
+    cod_categoria INT, 
+    cod_subcategoria_name INT,
+    cod_subcategoria INT,
+    fecha_creacion TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (cod_producto) REFERENCES productos(cod_producto) ON DELETE CASCADE,
+    FOREIGN KEY (cod_categoria) REFERENCES categorias(cod_categoria) ON DELETE CASCADE,
+    FOREIGN KEY (cod_subcategoria_name) REFERENCES subcategorias_names(cod_subcategoria_name) ON DELETE CASCADE,
+    FOREIGN KEY (cod_subcategoria) REFERENCES subcategorias(cod_subcategoria) ON DELETE CASCADE
 )ENGINE=InnoDB DEFAULT CHARSET=UTF8MB4;
 
 -- Clientes

@@ -3,13 +3,14 @@ import { app } from './src/server';
 import { loadRoutes } from './src/utils/loadRoutes';
 import { HomeController } from './src/app/controllers/HomeController';
 import { UserController } from './src/app/controllers/UserController';
+import { ProductsController } from './src/app/controllers/ProductsController';
 import { setupSwagger } from './src/app/services/swagger';
 
 
 console.log(`mirando que sale aqui ${process.env.PORT}`);
 
 
-loadRoutes(app, [HomeController, UserController]);
+loadRoutes(app, [HomeController, UserController, ProductsController]);
 
 setupSwagger(app);
 

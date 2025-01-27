@@ -3,6 +3,7 @@ import { Application, NextFunction, Request, Response, Router } from 'express';
 import { RouteMeta, RouteOptions } from '../interfaces/routeMeta-interface';
 import { authJswValidate } from '../app/middleware/auth-middleware';
 import { ValidationChain } from 'express-validator';
+import upload  from '../app/config/multer-config'
 
 
 
@@ -76,4 +77,18 @@ function processControllerRoutes(instance: any, prototype: any, router: Router):
   });
 
 
+}
+
+export function UploadMiddleware(fieldName: string) {
+  return function(target: any, propertyKey: string, descriptor: PropertyDescriptor){
+    const origiinalMethod = descriptor.value;
+
+    descriptor.value = function(req: Request, res: Response, next: Function) {
+      upload.single(fieldName)(req, res, (err) => {
+        if (err) res.status(400).json({ message: "Error al procesar el archivo", error: err });
+        return origiinalMethod.call(this, req, res, next);
+      })
+    }
+
+  }
 }

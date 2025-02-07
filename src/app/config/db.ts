@@ -23,8 +23,9 @@ export class DatabaseConfig  extends Config {
    * @returns Resultado de la consulta.
    */
     public async resultPromise(sql: string, data: any[] = []): Promise<any> {
-      console.log('aqui llegamos');
+      
         try {
+          console.log('aqui llegamos sobre el this.pool');
           const [rows] = await this.pool.execute(sql, data);
           console.log( ' mirando esto ', sql)
           console.log( ' mirando esto ', rows)

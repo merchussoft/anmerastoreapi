@@ -25,6 +25,7 @@ export class DatabaseConfig  extends Config {
     public async resultPromise(sql: string, data: any[] = []): Promise<any> {
         try {
           const [rows] = await this.pool.execute(sql, data);
+          console.log(rows)
           return sendQueryResult(rows)
         } catch (err: any) {
           return sendQueryResult([], err.sqlMessage, 406)

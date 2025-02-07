@@ -37,15 +37,10 @@ export const sendError = (res: Response, error: any, message = 'An error occurre
 }
 
 export const sendQueryResult = <T>(data: T, message='Query executed successfully', statusCode = 200) => {
-  const response: ApiResponse<T> = {
-    success: true,
-    data,
-    message
-  }
-
   return {
     statusCode,
-    response
+    data,
+    message
   }
 }
 

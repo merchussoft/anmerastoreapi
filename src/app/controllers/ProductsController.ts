@@ -14,7 +14,7 @@ export class ProductsController {
     }
 
 
-    @Route('get', '/', {authRequired: true})
+    @Route('get', '/')
     async getProduct(req: Request, res: Response) {
         return sendSuccess(res, {})
     }
@@ -26,5 +26,7 @@ export class ProductsController {
         const file = req.file;
 
         console.log("Archivo subido:", file)
+
+        
     }
 }

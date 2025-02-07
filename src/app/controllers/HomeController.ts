@@ -34,8 +34,8 @@ export class HomeController {
                 database: process.env.DB_NAME_BASEADMIN
             });
 
-            
-            const data_result = data[0];
+            console.log('mirando esto ', data);
+            /**const data_result = data[0];
             if(!data_result.count) return sendError(res, 'warning', 'El usuario es incorrecto', 403);
 
             // Comparar la contraseña proporcionada con la encriptada en la base de datos
@@ -44,7 +44,7 @@ export class HomeController {
 
             // Generar un JWT si las credenciales son correctas
             const token = jwtEncoded({ userId: data_result.cod_empleado });
-            return sendSuccess(res, {token: token}, 'Login exitoso')
+            return sendSuccess(res, {token: token}, 'Login exitoso')*/
             
         } catch (error) {
             console.log('mirando este error ', error)

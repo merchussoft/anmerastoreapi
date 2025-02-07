@@ -91,15 +91,6 @@ pipeline {
             steps {
                 script {
                     sh '''
-                        echo "Setting environment variables for Docker Compose..."
-                        export DB_HOST=${DB_HOST}
-                        export DB_USER=${DB_USER}
-                        export DB_PASSWORD=${DB_PASSWORD}
-                        export DB_NAME=${DB_NAME}
-                        export DB_PORT=${DB_PORT}
-                        export DB_NAME_BASEADMIN=${DB_NAME_BASEADMIN}
-                        export PORT=${PORT}
-
                         echo "desplegando la aplicaion con docker"
                         docker compose up --build -d
                     '''

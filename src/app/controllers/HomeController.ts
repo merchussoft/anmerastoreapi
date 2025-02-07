@@ -32,8 +32,6 @@ export class HomeController {
                 campo: "usuario",
                 valor: usuario
             });
-
-            console.log('mirando esta data ', data)
             
             const data_result = data[0];
             if(!data_result.count) return sendError(res, 'warning', 'El usuario es incorrecto', 403);

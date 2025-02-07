@@ -45,6 +45,7 @@ export class HomeController {
             return sendSuccess(res, {token: `Bearer ${token}`}, 'Login exitoso')
             
         } catch (error) {
+            console.log('mirando este error ', error)
             return sendError(res, 'error', 'error en el servidor', 500);
         }
         

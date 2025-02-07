@@ -47,7 +47,7 @@ export class DatabaseConfig  extends Config {
 
     const sql = `SELECT ${campos} FROM ${data_table} WHERE ${campo}=${this.escapeValue(valor)} ${adicional}`;
     console.log(sql)
-    return this.resultPromise(sql, datos);
+    return await this.resultPromise(sql, datos);
   }
 
   /**

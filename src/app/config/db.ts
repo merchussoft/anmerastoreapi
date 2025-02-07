@@ -5,11 +5,17 @@ import { Config } from './config';
 
 export class DatabaseConfig  extends Config {
 
-    private pool: mysql.Pool;
+    private readonly pool: mysql.Pool;
 
     constructor() {
         super()
-        this.pool = this.createPool();
+        try {
+          this.pool = this.createPool();
+        } catch (error) {
+          console.error("❌ Error al inicializar el pool de conexiones:", error);
+        throw new Error("No se pudo conectar a la base de datos");
+        }
+        
     }
 
     private createPool() {

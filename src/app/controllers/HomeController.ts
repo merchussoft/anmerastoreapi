@@ -34,15 +34,15 @@ export class HomeController {
             });
             
             const data_result = data[0];
-            if(!data_result.count) return sendError(res, 'warning', 'El usuario es incorrecto', 401);
+            if(!data_result.count) return sendError(res, 'warning', 'El usuario es incorrecto', 403);
 
             // Comparar la contraseña proporcionada con la encriptada en la base de datos
             const password_match = await bcrypt.compare(password, data_result.password);
-            if(!password_match) return sendError(res, 'warning', 'La password es incorrecta', 401);
+            if(!password_match) return sendError(res, 'warning', 'La password es incorrecta', 403);
 
             // Generar un JWT si las credenciales son correctas
             const token = jwtEncoded({ userId: data_result.cod_empleado });
-            return sendSuccess(res, {token: `Bearer ${token}`}, 'Login exitoso')
+            return sendSuccess(res, {token: token}, 'Login exitoso')
             
         } catch (error) {
             console.log('mirando este error ', error)

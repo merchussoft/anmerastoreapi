@@ -3,7 +3,8 @@ export interface ObtieneDatos {
     str_adicional?: string,
     campo?: number | string,
     valor?: number | string,
-    table: string
+    table: string,
+    database?: string
 }
 
 export interface MysqlRoot {

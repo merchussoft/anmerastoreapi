@@ -28,9 +28,10 @@ export class HomeController {
             // Buscar el usuario en la base de datos por username
             const { response: {data}} = await this.db.obtieneDatos({
                 lista_campos: ['count(cod_empleado) as count, password, cod_empleado'],
-                table: `${process.env.DB_NAME_BASEADMIN}.empleados`,
+                table: 'empleados',
                 campo: "usuario",
-                valor: usuario
+                valor: usuario,
+                database: process.env.DB_NAME_BASEADMIN
             });
 
             

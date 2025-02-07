@@ -31,8 +31,9 @@ export class DatabaseConfig  extends Config {
     public async resultPromise(sql: string, data: any[] = []): Promise<any> {
       
         try {
-          console.log('aqui llegamos sobre el this.pool');
-          const [rows] = await this.pool.execute(sql, data);
+          
+          const connection = await this.pool.getConnection();
+          const [rows] = await connection.execute(sql, data);
           console.log( ' mirando esto ', sql)
           console.log( ' mirando esto ', rows)
           return sendQueryResult(rows)

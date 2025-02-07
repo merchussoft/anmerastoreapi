@@ -42,7 +42,7 @@ export class DatabaseConfig  extends Config {
     const adicional = data.str_adicional ?? '';
     const campo = data.campo ?? '1';
     const valor = data.valor ?? '1';
-    const data_table = data.database ? `${data.database}.${data.table}` : data.table;
+    const data_table = data.database ? `${data.database.replace(/"/g, '')}.${data.table}` : data.table;
 
     const sql = `SELECT ${campos} FROM ${data_table} WHERE ${campo}=${this.escapeValue(valor)} ${adicional}`;
     console.log(sql)

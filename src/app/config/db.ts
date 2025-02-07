@@ -5,7 +5,7 @@ import { Config } from './config';
 
 export class DatabaseConfig  extends Config {
 
-    private readonly pool: mysql.Pool;
+    private pool: mysql.Pool;
 
     constructor() {
         super()

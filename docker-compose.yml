@@ -15,5 +15,3 @@ services:
       - DB_NAME_BASEADMIN=${DB_NAME_BASEADMIN}
       - NODE_ENV=develonment
     restart: always
-    volumes:
-      - .:/app

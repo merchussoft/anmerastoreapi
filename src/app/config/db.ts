@@ -9,13 +9,7 @@ export class DatabaseConfig  extends Config {
 
     constructor() {
         super()
-        try {
-          this.pool = this.createPool();
-        } catch (error) {
-          console.error("❌ Error al inicializar el pool de conexiones:", error);
-        throw new Error("No se pudo conectar a la base de datos");
-        }
-        
+        this.pool = this.createPool();
     }
 
     private createPool() {
@@ -29,13 +23,8 @@ export class DatabaseConfig  extends Config {
    * @returns Resultado de la consulta.
    */
     public async resultPromise(sql: string, data: any[] = []): Promise<any> {
-      
         try {
-          
-          const connection = await this.pool.getConnection();
-          const [rows] = await connection.execute(sql, data);
-          console.log( ' mirando esto ', sql)
-          console.log( ' mirando esto ', rows)
+          const [rows] = await this.pool.execute(sql, data);
           return sendQueryResult(rows)
         } catch (err: any) {
           return sendQueryResult([], err.sqlMessage, 406)
@@ -55,8 +44,7 @@ export class DatabaseConfig  extends Config {
     const data_table = data.database ? `${data.database.replace(/"/g, '')}.${data.table}` : data.table;
 
     const sql = `SELECT ${campos} FROM ${data_table} WHERE ${campo}=${this.escapeValue(valor)} ${adicional}`;
-    console.log(sql)
-    return await this.resultPromise(sql, datos);
+    return this.resultPromise(sql, datos);
   }
 
   /**

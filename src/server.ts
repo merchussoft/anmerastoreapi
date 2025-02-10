@@ -17,6 +17,6 @@ app.use(express.urlencoded({extended: true}));
 app.use(express.json());
 app.use(loggerMiddleware);
 
-app.disable("x-powered-by");
+//app.disable("x-powered-by");
 
 export {app}

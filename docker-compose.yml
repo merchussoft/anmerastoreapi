@@ -1,6 +1,7 @@
 services:
   api_anmerastore:
-    build: .
+    build:
+      context: .
     container_name: anmerastore_api
     ports:
       - ${PORT}:${PORT}
@@ -14,3 +15,5 @@ services:
       - DB_NAME_BASEADMIN=${DB_NAME_BASEADMIN}
       - NODE_ENV=develonment
     restart: always
+    volumes:
+      - .:/app

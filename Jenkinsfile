@@ -18,6 +18,17 @@ pipeline {
 
     stages {
 
+        stage('stop and down and eraser volumes Docker Compose') {
+            steps {
+
+                    sh '''
+                        echo "tumbando los contenedores y sus volumes anteriores"
+                        docker compose down -v
+                    '''
+
+            }
+        }
+
         stage('Cleanup Previous Build'){
             steps {
                 script {
@@ -76,23 +87,13 @@ pipeline {
             }
         }
 
-        stage('stop and down and eraser volumes Docker Compose') {
-            steps {
-
-                    sh '''
-                        echo "tumbando los contenedores y sus volumes anteriores"
-                        docker compose down -v
-                    '''
-
-            }
-        }
-
         stage('deploy with Docker Compose') {
             steps {
                 script {
                     sh '''
                         echo "desplegando la aplicaion con docker"
-                        docker compose up --build -d
+                        docker compose build --no-cache
+                        docker compose up -d --force-recreate
                     '''
                 }
             }

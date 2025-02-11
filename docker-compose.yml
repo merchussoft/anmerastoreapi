@@ -13,7 +13,8 @@ services:
       - DB_NAME=${DB_NAME}
       - DB_PORT=${DB_PORT}
       - DB_NAME_BASEADMIN=${DB_NAME_BASEADMIN}
-      - NODE_ENV=develonment
+      - NODE_ENV=production
     restart: always
     volumes:
-      - /app/node_modules
+      - .:/app
+      - /app/node_modules/

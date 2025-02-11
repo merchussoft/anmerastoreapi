@@ -15,5 +15,3 @@ services:
       - DB_NAME_BASEADMIN=${DB_NAME_BASEADMIN}
       - NODE_ENV=production
     restart: always
-    volumes:
-      - ./node_modules:/app/node_modules

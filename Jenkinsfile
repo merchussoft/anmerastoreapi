@@ -87,17 +87,6 @@ pipeline {
             }
         }
 
-        stage('Install Dependencies yarn ') {
-            steps {
-                script {
-                    sh '''
-                        echo "instalando las depenciar de yarn fuera del contendor"
-                        yarn install --frozen-lockfile
-                    '''
-                }
-            }
-        }
-
         stage('deploy with Docker Compose') {
             steps {
                 script {

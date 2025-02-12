@@ -3,8 +3,9 @@ import { Request, Response } from 'express';
 import bcrypt from 'bcrypt';
 import { DatabaseConfig } from "../config/db";
 import { validateLogin } from "../middleware/validateLogin";
-import { sendError, sendSuccess } from "../../utils/responseHandler";
+import { sendError, sendSuccess, sendSuccessReturn } from "../../utils/responseHandler";
 import { jwtEncoded } from "../middleware/auth-middleware";
+import { logoutUser } from "../middleware/auth-middleware";
 
 
 
@@ -51,6 +52,14 @@ export class HomeController {
             return sendError(res, 'error', 'error en el servidor', 500);
         }
         
+    }
+
+    @Route('get', '/logout', {authRequired: true})
+    async logOut(req: Request, res: Response) {
+        const token = req.header('Authorization')?.replace('Bearer ', '');
+        if(!token) return sendSuccessReturn(res, 'Token no proporcionado', 400);
+        logoutUser(token);
+        return sendSuccessReturn(res,'Logged out successfully')
     }
 
 

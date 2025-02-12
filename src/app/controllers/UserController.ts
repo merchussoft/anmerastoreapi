@@ -21,7 +21,7 @@ export class UserController {
      * @param req aqui es ta ruta para visualizar los usuarios registradoe en la aplicacion 
      * @param res 
      */
-    @Route('get', '/view-users')
+    @Route('get', '/view-users', {authRequired: true})
     async getHome(req: Request, res: Response){
         const resultado_query = await this.db.obtieneDatos({table: process.env.DB_NAME_BASEADMIN + ".empleados"});
         res.status(resultado_query.statusCode).json(resultado_query);
